@@ -3,14 +3,10 @@ name: BuildX
 on:
   push:
     branches: [ main ]
-
-env:
-  DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
   
 jobs:
   build:
     runs-on: ubuntu-18.04
-    if: "${{ env.DOCKER_TOKEN != '' }}"
     env:
       IMAGE_NAME: ${{ github.repository }}
       IMAGE_FILE: Dockerfile
@@ -50,18 +46,18 @@ jobs:
         run: docker buildx build --output "type=image,push=false" ${{ steps.prepare.outputs.buildx_args }}
 
       - name: Login to DockerHub 👤
-        if: success() && github.event_name != 'pull_request'
+        if: success() && github.event_name != 'pull_request' && ${{ secrets.DOCKER_TOKEN != '' }}
         uses: docker/login-action@v2.0.0
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Docker Push 📌
-        if: success() && github.event_name != 'pull_request'
+        if: success() && github.event_name != 'pull_request' && ${{ secrets.DOCKER_TOKEN != '' }}
         run: docker buildx build --output "type=image,push=true" ${{ steps.prepare.outputs.buildx_args }}
 
       - name: Inspect 🔍
-        if: github.event_name != 'pull_request'
+        if: success() && github.event_name != 'pull_request' && ${{ secrets.DOCKER_TOKEN != '' }}
         run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }}
 
       - name: Log into registry ${{ env.REGISTRY }} 👤
