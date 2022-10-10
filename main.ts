@@ -1,6 +1,6 @@
-import puppeteer from 'https://deno.land/x/puppeteer@14.1.1/mod.ts';
+import puppeteer from 'https://deno.land/x/puppeteer@16.2.0/mod.ts';
 import 'https://deno.land/x/dotenv@v3.2.0/load.ts';
-import * as log from 'https://deno.land/std@0.149.0/log/mod.ts';
+import * as log from 'https://deno.land/std@0.159.0/log/mod.ts';
 
 const isDev = Deno.env.get('ENV') !== 'production';
 log.debug('Puppeteer create launcher...');

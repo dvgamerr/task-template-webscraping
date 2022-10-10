@@ -1,6 +1,6 @@
-import * as log from 'https://deno.land/std@0.149.0/log/mod.ts';
+import * as log from 'https://deno.land/std@0.159.0/log/mod.ts';
 
-import dayjs from 'https://cdn.skypack.dev/dayjs@1.11.4';
+import dayjs from 'https://cdn.skypack.dev/dayjs';
 import weekday from 'https://cdn.skypack.dev/dayjs/plugin/weekday'
 import weekOfYear from 'https://cdn.skypack.dev/dayjs/plugin/weekOfYear'
 
